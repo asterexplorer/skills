@@ -169,24 +169,38 @@
       gap: 24px;
     }
 
-    /* ══════ CARDS ══════ */
+    /* ══════ CARDS (Premium Glassmorphism) ══════ */
     .glass-card {
       background: var(--surface);
       backdrop-filter: var(--surface-blur);
+      -webkit-backdrop-filter: var(--surface-blur);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 24px;
       position: relative;
       overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      transform-style: preserve-3d;
     }
 
-    .glass-card::before {
-      content: '';
+    /* Glare Layer */
+    .glass-card .glare {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      inset: 0;
+      background: radial-gradient(circle at var(--mouseX) var(--mouseY), rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
     }
+
+    .glass-card:hover .glare { opacity: 1; }
+
+    .glass-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 30px -10px rgba(0,0,0,0.5), 0 0 0 1px var(--border-accent);
+    }
+
 
     .card-title {
       font-family: 'Outfit', sans-serif;
@@ -290,7 +304,21 @@
       vertical-align: middle;
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       height: 64px;
+      transition: background 0.3s ease;
     }
+
+    /* Staggered Entry Animation */
+    .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 
     .time-cell {
       width: 80px;
@@ -565,7 +593,8 @@
 
     <div class="dashboard-grid">
       <div class="main-panel">
-        <div class="glass-card">
+        <div class="glass-card reveal">
+          <div class="glare"></div>
           <div id="legend" class="legend"></div>
           <div class="table-container">
             <table id="schedule-table"></table>
@@ -574,7 +603,8 @@
       </div>
 
       <div class="side-panel">
-        <div class="glass-card">
+        <div class="glass-card reveal">
+          <div class="glare"></div>
           <div class="card-title">Next Session</div>
           <div class="countdown-timer">
             <div id="next-session-name" style="font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 4px;">—</div>
@@ -583,12 +613,14 @@
           </div>
         </div>
 
-        <div class="glass-card">
+        <div class="glass-card reveal">
+          <div class="glare"></div>
           <div class="card-title">Activity Statistics</div>
           <div id="stats-container" class="stats-list"></div>
         </div>
 
-        <div class="glass-card">
+        <div class="glass-card reveal">
+          <div class="glare"></div>
           <div class="card-title">Weekly Progress</div>
           <div class="progress-radial">
             <div style="font-family: 'Outfit'; font-size: 32px; font-weight: 700;" id="progress-pct">0%</div>
@@ -599,7 +631,8 @@
           </div>
         </div>
 
-        <div class="glass-card">
+        <div class="glass-card reveal">
+          <div class="glare"></div>
           <div class="card-title">Current Time</div>
           <div style="font-family: 'Outfit'; font-size: 24px; font-weight: 600; line-height: 1;" id="clock-time">00:00:00</div>
           <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;" id="clock-date">Thursday, 20 March</div>
@@ -731,6 +764,35 @@
       updateHourMap();
       renderAll();
       startClocks();
+      initVisualEffects();
+    }
+
+    // ─── VISUAL EFFECTS ───
+    function initVisualEffects() {
+        // Interactive Glare
+        document.addEventListener('mousemove', e => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouseX', `${x}px`);
+                card.style.setProperty('--mouseY', `${y}px`);
+            });
+        });
+
+        // Staggered Entrance Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 150);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
     function updateHourMap() {
