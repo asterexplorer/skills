@@ -1,554 +1,1175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weekly Upskilling Timetable</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#0e0f11; --surface:#16181c; --surface2:#1e2026;
-  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
-  --text:#f0ede8; --muted:#7a7870; --dim:#3a3a38;
-  --autocad-bg:#0d2a1f; --autocad-accent:#1D9E75; --autocad-text:#5DCAA5;
-  --flutter-bg:#1a1838; --flutter-accent:#534AB7; --flutter-text:#AFA9EC;
-  --design-bg:#2a1510;  --design-accent:#D85A30;  --design-text:#F0997B;
-  --video-bg:#2a1e08;   --video-accent:#BA7517;   --video-text:#EF9F27;
-  --youtube-bg:#2a0d0d; --youtube-accent:#E24B4A; --youtube-text:#F09595;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
-.container{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:32px 24px 60px;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillPulse | Professional Upskilling Timetable</title>
+  <!-- Google Fonts: Inter for UI, Outfit for Headings -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Deep Dark Theme (Default) */
+      --bg: #050608;
+      --surface-blur: blur(20px);
+      --surface: rgba(22, 24, 28, 0.7);
+      --surface-hover: rgba(30, 32, 38, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(255, 255, 255, 0.15);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #475569;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.3);
+      
+      /* Skill-specific Colors (Enhanced) */
+      --sk-blue-bg: rgba(59, 130, 246, 0.15);  --sk-blue: #60a5fa;
+      --sk-purple-bg: rgba(139, 92, 246, 0.15); --sk-purple: #a78bfa;
+      --sk-orange-bg: rgba(249, 115, 22, 0.15); --sk-orange: #fb923c;
+      --sk-emerald-bg: rgba(16, 185, 129, 0.15); --sk-emerald: #34d399;
+      --sk-rose-bg: rgba(244, 63, 94, 0.15);    --sk-rose: #fb7185;
+      --sk-indigo-bg: rgba(99, 102, 241, 0.15); --sk-indigo: #818cf8;
+      --sk-amber-bg: rgba(245, 158, 11, 0.15);  --sk-amber: #fbbf24;
+      --sk-cyan-bg: rgba(6, 182, 212, 0.15);   --sk-cyan: #22d3ee;
+    }
 
-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;flex-wrap:wrap;gap:20px;}
-.header-left h1{font-family:'DM Serif Display',serif;font-size:clamp(26px,4vw,44px);font-weight:400;letter-spacing:-.02em;line-height:1.1;}
-.header-left h1 em{font-style:italic;color:var(--design-text);}
-.header-left p{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.03em;text-transform:uppercase;}
-.header-right{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
 
-.clock-panel{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:18px 24px;text-align:right;min-width:180px;}
-#live-time{font-family:'DM Serif Display',serif;font-size:34px;letter-spacing:-.03em;line-height:1;}
-#live-date{font-size:12px;color:var(--muted);margin-top:5px;letter-spacing:.04em;text-transform:uppercase;}
-#live-day{font-size:11px;margin-top:4px;color:var(--design-text);font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+    /* Animated Mesh Gradient Background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 35%),
+        radial-gradient(circle at 90% 10%, rgba(139, 92, 246, 0.12) 0%, transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.1) 0%, transparent 35%),
+        radial-gradient(circle at 20% 70%, rgba(6, 182, 212, 0.1) 0%, transparent 35%),
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+      animation: mesh-float 30s infinite alternate ease-in-out;
+    }
 
-.btn-edit{display:flex;align-items:center;gap:8px;padding:12px 20px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;align-self:flex-start;margin-top:4px;}
-.btn-edit:hover{background:var(--surface2);border-color:rgba(255,255,255,.22);}
+    @keyframes mesh-float {
+      0% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(10deg) scale(1.1); }
+    }
 
-.today-banner{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:16px 24px;margin-bottom:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.today-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
-.today-sessions{display:flex;gap:10px;flex-wrap:wrap;}
-.today-pill{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:500;}
-.today-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.no-sessions{font-size:13px;color:var(--muted);font-style:italic;}
+    .app-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      position: relative;
+    }
 
-.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
-.legend-item{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .2s;user-select:none;}
-.legend-item:hover{transform:translateY(-1px);}
-.legend-item.active{border-color:currentColor!important;}
-.legend-item.dimmed{opacity:.3;}
-.legend-dot{width:8px;height:8px;border-radius:50%;}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
-.table-wrapper{overflow-x:auto;border-radius:18px;border:1px solid var(--border2);background:var(--surface);}
-table{width:100%;border-collapse:collapse;min-width:700px;}
-thead th{padding:16px 10px 14px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);text-align:center;}
-thead th.time-head{width:70px;}
-thead th.today-col{color:var(--design-text);position:relative;}
-thead th.today-col::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:var(--design-accent);border-radius:2px 2px 0 0;}
-tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:rgba(255,255,255,.02);}
-tbody tr.section-sep td{border-top:1px solid var(--border2);}
-td.time-label{font-size:11px;color:var(--dim);text-align:right;padding:10px 12px 10px 0;white-space:nowrap;vertical-align:middle;width:70px;}
-td.time-label.section-start{color:var(--muted);font-weight:600;font-size:10px;letter-spacing:.05em;text-transform:uppercase;}
-td.slot{padding:5px;vertical-align:middle;height:56px;text-align:center;transition:opacity .25s;}
-td.slot.today-col{background:rgba(255,255,255,.018);}
-td.slot.dimmed{opacity:.15;}
-td.slot.current-row{background:rgba(255,255,255,.03);}
-.block{width:100%;height:44px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:transform .15s,filter .15s;border:1px solid transparent;}
-.block:hover{transform:scale(1.04);filter:brightness(1.1);}
-.block-name{font-size:10px;font-weight:600;letter-spacing:.02em;line-height:1.2;}
-.block-sub{font-size:9px;opacity:.65;line-height:1.1;}
-.empty-dot{width:4px;height:4px;border-radius:50%;background:var(--dim);margin:auto;}
-.sk-autocad{background:var(--autocad-bg);border-color:rgba(29,158,117,.25);}
-.sk-autocad .block-name,.sk-autocad .block-sub{color:var(--autocad-text);}
-.sk-flutter{background:var(--flutter-bg);border-color:rgba(83,74,183,.25);}
-.sk-flutter .block-name,.sk-flutter .block-sub{color:var(--flutter-text);}
-.sk-design{background:var(--design-bg);border-color:rgba(216,90,48,.25);}
-.sk-design .block-name,.sk-design .block-sub{color:var(--design-text);}
-.sk-video{background:var(--video-bg);border-color:rgba(186,117,23,.25);}
-.sk-video .block-name,.sk-video .block-sub{color:var(--video-text);}
-.sk-youtube{background:var(--youtube-bg);border-color:rgba(226,75,74,.25);}
-.sk-youtube .block-name,.sk-youtube .block-sub{color:var(--youtube-text);}
-.sk-extra0{background:rgba(55,138,221,.1);border-color:rgba(55,138,221,.25);}
-.sk-extra0 .block-name,.sk-extra0 .block-sub{color:#85B7EB;}
-.sk-extra1{background:rgba(99,153,34,.1);border-color:rgba(99,153,34,.25);}
-.sk-extra1 .block-name,.sk-extra1 .block-sub{color:#97C459;}
-.sk-extra2{background:rgba(212,83,126,.1);border-color:rgba(212,83,126,.25);}
-.sk-extra2 .block-name,.sk-extra2 .block-sub{color:#ED93B1;}
-@keyframes pulse-border{0%,100%{box-shadow:0 0 0 1.5px currentColor;}50%{box-shadow:0 0 12px 2px currentColor;}}
-.block.active-session{animation:pulse-border 2s ease-in-out infinite;}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:24px;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;}
-.stat-label{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.stat-value{font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:-.02em;line-height:1;}
-.stat-unit{font-size:12px;color:var(--muted);margin-top:4px;}
+    /* ══════ HEADER ══════ */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+    }
 
-.week-progress{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-top:12px;}
-.wp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.wp-title{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
-.wp-pct{font-family:'DM Serif Display',serif;font-size:22px;}
-.wp-track{height:6px;background:var(--dim);border-radius:99px;overflow:hidden;}
-.wp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--flutter-accent),var(--design-accent));transition:width 1s cubic-bezier(.4,0,.2,1);}
+    .brand h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-footer{margin-top:40px;text-align:center;font-size:11px;color:var(--dim);letter-spacing:.04em;}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
-.fade-up{opacity:0;transform:translateY(16px);animation:fadeUp .5s ease forwards;}
-.fade-up:nth-child(1){animation-delay:.05s;}
-.fade-up:nth-child(2){animation-delay:.12s;}
-.fade-up:nth-child(3){animation-delay:.19s;}
-.fade-up:nth-child(4){animation-delay:.26s;}
-.fade-up:nth-child(5){animation-delay:.33s;}
-.fade-up:nth-child(6){animation-delay:.40s;}
+    .brand p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
 
-/* ═══════════════ MODAL ═══════════════ */
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center;padding:16px;}
-.modal-backdrop.open{display:flex;}
-.modal{background:#1a1c21;border:1px solid rgba(255,255,255,.15);border-radius:20px;width:100%;max-width:820px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;}
-.modal-title{font-family:'DM Serif Display',serif;font-size:22px;}
-.modal-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px;line-height:1;padding:4px 8px;border-radius:8px;transition:background .15s;font-family:inherit;}
-.modal-close:hover{background:rgba(255,255,255,.08);color:var(--text);}
-.modal-tabs{display:flex;gap:2px;padding:12px 24px 0;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;}
-.tab-btn{padding:8px 18px;border:none;background:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;}
-.tab-btn.active{color:var(--text);border-bottom-color:var(--design-accent);}
-.tab-btn:hover:not(.active){color:var(--text);background:rgba(255,255,255,.04);}
-.modal-body{overflow-y:auto;flex:1;padding:24px;}
-.tab-panel{display:none;}
-.tab-panel.active{display:block;}
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
 
-/* schedule grid */
-.edit-grid-wrap{overflow-x:auto;}
-.edit-grid{border-collapse:collapse;width:100%;min-width:580px;}
-.edit-grid th{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:8px 6px;text-align:center;font-weight:600;}
-.edit-grid td{padding:3px;}
-.edit-grid td.eg-time{font-size:11px;color:var(--muted);text-align:right;padding-right:10px;white-space:nowrap;vertical-align:middle;}
-.slot-select{width:100%;background:#0e0f11;border:1px solid rgba(255,255,255,.1);border-radius:7px;color:var(--text);font-size:10px;padding:5px 4px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:border-color .15s;}
-.slot-select:hover,.slot-select:focus{border-color:rgba(255,255,255,.25);outline:none;}
-.slot-select.filled{border-color:rgba(255,255,255,.2);background:#111318;}
+    .glass-btn {
+      background: var(--surface);
+      backdrop-filter: var(--surface-blur);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-/* skills */
-.skills-list{display:flex;flex-direction:column;gap:8px;}
-.skill-row{display:grid;grid-template-columns:14px 1fr 1fr auto;gap:10px;align-items:center;background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;}
-.skill-dot-preview{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
-.skill-input{background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.1);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:4px 2px;width:100%;transition:border-color .15s;}
-.skill-input:focus{outline:none;border-bottom-color:rgba(255,255,255,.3);}
-.skill-input::placeholder{color:var(--dim);}
-.btn-del{background:none;border:1px solid rgba(226,75,74,.3);color:rgba(226,75,74,.7);border-radius:8px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap;}
-.btn-del:hover{background:rgba(226,75,74,.15);color:#F09595;}
-.btn-add-row{display:flex;align-items:center;gap:8px;margin-top:10px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);color:var(--muted);border-radius:12px;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;transition:all .15s;}
-.btn-add-row:hover{background:rgba(255,255,255,.06);color:var(--text);}
+    .glass-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -4px rgba(0,0,0,0.3);
+    }
 
-/* time slots */
-.timeslot-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#111318;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 14px;margin-bottom:8px;}
+    .glass-btn.primary {
+      background: var(--accent);
+      border-color: transparent;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
 
-/* footer */
-.modal-footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;}
-.btn-cancel{background:none;border:1px solid rgba(255,255,255,.12);color:var(--muted);padding:10px 20px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
-.btn-cancel:hover{border-color:rgba(255,255,255,.25);color:var(--text);}
-.btn-save{background:var(--design-accent);border:none;color:#fff;padding:10px 24px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:filter .15s;}
-.btn-save:hover{filter:brightness(1.12);}
-@keyframes savedFlash{0%,100%{background:var(--design-accent);}50%{background:var(--autocad-accent);}}
-.saved{animation:savedFlash .6s ease;}
+    .glass-btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
 
-/* notification toast */
-.toast{position:fixed;bottom:28px;right:28px;background:#1D9E75;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:500;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;z-index:2000;}
-.toast.show{opacity:1;transform:translateY(0);}
-</style>
+    /* ══════ DASHBOARD GRIDS ══════ */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .main-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ══════ CARDS ══════ */
+    .glass-card {
+      background: var(--surface);
+      backdrop-filter: var(--surface-blur);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ══════ SESSION COUNTDOWN ══════ */
+    .countdown-timer {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .timer-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .timer-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ══════ PROGRESS ══════ */
+    .progress-radial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #a78bfa);
+      border-radius: 4px;
+      transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ══════ SCHEDULE TABLE ══════ */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 800px;
+    }
+
+    th {
+      padding: 16px 12px;
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th.today-col {
+      color: var(--accent);
+      position: relative;
+    }
+
+    th.today-col::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 20%;
+      right: 20%;
+      height: 2px;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    td {
+      padding: 6px;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      height: 64px;
+    }
+
+    .time-cell {
+      width: 80px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-align: right;
+      padding-right: 16px;
+    }
+
+    .skill-block {
+      width: 100%;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 8px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid transparent;
+    }
+
+    .skill-block:hover {
+      transform: scale(1.03) translateY(-2px);
+      filter: brightness(1.15);
+      z-index: 10;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+
+    .skill-block .name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .skill-block .sub {
+      font-size: 9px;
+      opacity: 0.7;
+    }
+
+    .empty-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .empty-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+
+    .current-slot {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      70% { box-shadow: 0 0 0 10px transparent; }
+      100% { box-shadow: 0 0 0 0 transparent; }
+    }
+
+    .active-session-block {
+      border-color: var(--accent) !important;
+      animation: pulse 2s infinite;
+    }
+
+    /* ══════ LEGEND & STATS ══════ */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .legend-item.dimmed { opacity: 0.3; filter: grayscale(0.5); }
+
+    .stats-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-mini-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .stat-mini-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+    .stat-mini-val { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 600; }
+
+    /* ══════ MODAL ══════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #0e0f12;
+      border: 1px solid var(--border-accent);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 48px -12px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 14px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .tab-btn.active { color: var(--text); }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    /* ══════ EDITING INTERFACES ══════ */
+    .edit-grid {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .edit-grid td { height: auto; padding: 4px; border: none; }
+    
+    .slot-select {
+      width: 100%;
+      background: #16181c;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .skill-edit-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .input-field {
+      background: #16181c;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .input-field:focus { outline: none; border-color: var(--accent); }
+
+    /* ══════ TOAST ══════ */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 2000;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .header-actions { width: 100%; }
+      .glass-btn { flex: 1; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-
-<header class="fade-up">
-  <div class="header-left">
-    <h1>Weekly <em>Upskilling</em><br>Timetable</h1>
-    <p>Professional Development · 5 Skills</p>
-  </div>
-  <div class="header-right">
-    <button class="btn-edit" onclick="openModal()">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" opacity=".7"><path d="M10.586 1.586a2 2 0 0 1 2.828 2.828l-8 8a2 2 0 0 1-.94.535l-3 .75a.5.5 0 0 1-.607-.607l.75-3a2 2 0 0 1 .535-.94l8-8z"/></svg>
-      Edit Timetable
-    </button>
-    <div class="clock-panel">
-      <div id="live-time">00:00:00</div>
-      <div id="live-date">—</div>
-      <div id="live-day">—</div>
-    </div>
-  </div>
-</header>
-
-<div class="today-banner fade-up">
-  <span class="today-label">Today's sessions</span>
-  <div class="today-sessions" id="today-sessions"></div>
-</div>
-
-<div class="legend fade-up" id="legend"></div>
-
-<div class="table-wrapper fade-up">
-  <table id="tt"></table>
-</div>
-
-<div class="stats fade-up" id="stats"></div>
-
-<div class="week-progress fade-up">
-  <div class="wp-header">
-    <span class="wp-title">Week progress</span>
-    <span class="wp-pct" id="wp-pct">0%</span>
-  </div>
-  <div class="wp-track"><div class="wp-fill" id="wp-fill" style="width:0%"></div></div>
-</div>
-
-<footer class="fade-up">Auto-updates every second &nbsp;·&nbsp; Last refresh: <span id="last-refresh">—</span></footer>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast">Changes saved!</div>
-
-<!-- ═══════════════════════ MODAL ═══════════════════════ -->
-<div class="modal-backdrop" id="modal-backdrop" onclick="backdropClick(event)">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">Edit Timetable</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-tabs">
-      <button class="tab-btn active" onclick="switchTab('schedule',this)">Schedule</button>
-      <button class="tab-btn" onclick="switchTab('skills',this)">Skills</button>
-      <button class="tab-btn" onclick="switchTab('timeslots',this)">Time Slots</button>
-    </div>
-    <div class="modal-body">
-      <div class="tab-panel active" id="tab-schedule">
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Assign a skill to each day/time slot. Choose "—" to clear a slot.</p>
-        <div class="edit-grid-wrap"><table class="edit-grid" id="edit-grid"></table></div>
+  <div class="app-container">
+    <header>
+      <div class="brand">
+        <h1>SkillPulse</h1>
+        <p id="app-subtitle">Upskilling Journey · 5 Competencies</p>
       </div>
-      <div class="tab-panel" id="tab-skills">
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Edit skill names and descriptions. Changes reflect in the schedule.</p>
-        <div class="skills-list" id="skills-list"></div>
-        <button class="btn-add-row" onclick="addSkill()">+ Add new skill</button>
+      <div class="header-actions">
+        <button class="glass-btn" onclick="exportData()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+        <button class="glass-btn primary" onclick="openModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Manage
+        </button>
       </div>
-      <div class="tab-panel" id="tab-timeslots">
-        <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Manage time slot labels. Use standard format like "9 AM" or "3 PM".</p>
-        <div id="timeslots-list"></div>
-        <button class="btn-add-row" onclick="addTimeSlot()">+ Add time slot</button>
+    </header>
+
+    <div class="dashboard-grid">
+      <div class="main-panel">
+        <div class="glass-card">
+          <div id="legend" class="legend"></div>
+          <div class="table-container">
+            <table id="schedule-table"></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-panel">
+        <div class="glass-card">
+          <div class="card-title">Next Session</div>
+          <div class="countdown-timer">
+            <div id="next-session-name" style="font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 4px;">—</div>
+            <div id="countdown-val" class="timer-val">00:00:00</div>
+            <div id="countdown-label" class="timer-label">Until next session</div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title">Activity Statistics</div>
+          <div id="stats-container" class="stats-list"></div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title">Weekly Progress</div>
+          <div class="progress-radial">
+            <div style="font-family: 'Outfit'; font-size: 32px; font-weight: 700;" id="progress-pct">0%</div>
+            <div class="progress-bar-container">
+              <div id="progress-fill" class="progress-bar-fill" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); text-align: center;">You've completed <span id="hours-done" style="color: var(--text)">0</span> of <span id="hours-total">0</span> potential study hours.</div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title">Current Time</div>
+          <div style="font-family: 'Outfit'; font-size: 24px; font-weight: 600; line-height: 1;" id="clock-time">00:00:00</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;" id="clock-date">Thursday, 20 March</div>
+        </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" id="btn-save" onclick="saveChanges()">Save changes</button>
+
+    <footer style="margin-top: 24px; text-align: center; font-size: 11px; color: var(--text-dim);">
+      SkillPulse Engine v2.0 • Data persists in browser storage • Updates automatically
+    </footer>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast">Changes saved successfully</div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleBackdrop(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 style="font-family: 'Outfit';">Timetable Manager</h2>
+        <button onclick="closeModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 20px;">✕</button>
+      </div>
+      <div class="tab-nav">
+        <button class="tab-btn active" id="tab-btn-schedule" onclick="switchTab('schedule')">Schedule</button>
+        <button class="tab-btn" id="tab-btn-skills" onclick="switchTab('skills')">Skills</button>
+        <button class="tab-btn" id="tab-btn-config" onclick="switchTab('config')">Time Slots</button>
+      </div>
+      <div class="modal-body">
+        <div id="panel-schedule" class="tab-panel">
+          <div style="overflow-x: auto;"><table class="edit-grid" id="edit-grid"></table></div>
+        </div>
+        <div id="panel-skills" class="tab-panel" style="display: none;">
+          <div id="edit-skills-list"></div>
+          <button class="glass-btn" style="width: 100%; margin-top: 12px; border-style: dashed;" onclick="addSkill()">+ Add New Skill</button>
+        </div>
+        <div id="panel-config" class="tab-panel" style="display: none;">
+          <div id="edit-timeslots-list"></div>
+          <button class="glass-btn" style="width: 100%; margin-top: 12px; border-style: dashed;" onclick="addTimeSlot()">+ Add Time Slot</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-btn" onclick="closeModal()">Cancel</button>
+        <button class="glass-btn primary" onclick="saveAll()">Commit Changes</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-// ─── CORE DATA ───────────────────────────────────────────────────────────
-let TIMES    = ['6 AM','8 AM','10 AM','12 PM','2 PM','4 PM','6 PM','8 PM'];
-let HOUR_MAP = [6,8,10,12,14,16,18,20];
+  <!-- SESSION DETAIL MODAL -->
+  <div class="modal-overlay" id="session-modal" onclick="closeSessionModal(event)">
+    <div class="modal" style="max-width: 500px; height: auto;">
+      <div class="modal-header" id="session-modal-header">
+        <div>
+            <h2 id="session-title" style="font-family: 'Outfit';">Session Title</h2>
+            <p id="session-subtitle" style="font-size: 13px; color: var(--text-muted);">Session Time</p>
+        </div>
+        <button onclick="closeSessionModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 20px;">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="stat-mini-card" style="margin-bottom: 20px; border-left: 4px solid var(--accent);">
+            <div class="stat-mini-label">Session Target</div>
+            <div id="session-desc" style="font-size: 14px; font-weight: 500;">Learning core concepts and building projects.</div>
+        </div>
+        
+        <div class="stat-mini-label">Personal Progress Journal</div>
+        <textarea id="session-journal" class="input-field" style="width: 100%; min-height: 150px; resize: none; background: #0a0b0e;" placeholder="What did you work on today? Any breakthroughs or blockers?"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-btn primary" onclick="saveSessionJournal()">Save Journal Entry</button>
+      </div>
+    </div>
+  </div>
 
-let SKILLS = {
-  autocad:{ name:'AutoCAD',        sub:'2D/3D Drafting',   cls:'sk-autocad', accent:'#1D9E75', textc:'#5DCAA5' },
-  flutter:{ name:'Flutter',        sub:'App Dev',          cls:'sk-flutter', accent:'#534AB7', textc:'#AFA9EC' },
-  design: { name:'Graphic Design', sub:'Branding & UI',    cls:'sk-design',  accent:'#D85A30', textc:'#F0997B' },
-  video:  { name:'Video Editing',  sub:'Post Production',  cls:'sk-video',   accent:'#BA7517', textc:'#EF9F27' },
-  youtube:{ name:'YouTube',        sub:'Content Strategy', cls:'sk-youtube', accent:'#E24B4A', textc:'#F09595' },
-};
+  <script>
+    // ─── INITIAL DEFAULTS ───
+    const DEFAULT_SKILLS = {
+      autocad: { name: 'AutoCAD', sub: '2D/3D Drafting', accent: 'var(--sk-emerald)', bg: 'var(--sk-emerald-bg)' },
+      flutter: { name: 'Flutter', sub: 'App Development', accent: 'var(--sk-purple)', bg: 'var(--sk-purple-bg)' },
+      design: { name: 'Graphic Design', sub: 'UI/UX Design', accent: 'var(--sk-orange)', bg: 'var(--sk-orange-bg)' },
+      video: { name: 'Video Editing', sub: 'Post-Production', accent: 'var(--sk-amber)', bg: 'var(--sk-amber-bg)' },
+      youtube: { name: 'YouTube', sub: 'Content Creation', accent: 'var(--sk-rose)', bg: 'var(--sk-rose-bg)' }
+    };
 
-let SCHEDULE = {
-  1:{1:'flutter',2:'flutter',4:'autocad',5:'autocad',7:'design'},
-  2:{1:'autocad',2:'autocad',4:'flutter',5:'flutter',6:'video',7:'video'},
-  3:{1:'design',2:'design',4:'video',5:'video',7:'youtube'},
-  4:{1:'flutter',2:'flutter',4:'autocad',5:'autocad',6:'design',7:'design'},
-  5:{1:'video',2:'video',4:'flutter',5:'flutter',7:'youtube'},
-  6:{0:'autocad',1:'autocad',2:'design',3:'design',4:'video',5:'video',6:'youtube',7:'youtube'},
-  0:{4:'youtube',5:'youtube',6:'flutter',7:'flutter'},
-};
+    const DEFAULT_SCHEDULE = {
+      1: { 1: 'flutter', 2: 'flutter', 4: 'autocad', 5: 'autocad', 7: 'design' },
+      2: { 1: 'autocad', 2: 'autocad', 4: 'flutter', 5: 'flutter', 6: 'video', 7: 'video' },
+      3: { 1: 'design', 2: 'design', 4: 'video', 5: 'video', 7: 'youtube' },
+      4: { 1: 'flutter', 2: 'flutter', 4: 'autocad', 5: 'autocad', 6: 'design', 7: 'design' },
+      5: { 1: 'video', 2: 'video', 4: 'flutter', 5: 'flutter', 7: 'youtube' },
+      6: { 0: 'autocad', 1: 'autocad', 2: 'design', 3: 'design', 4: 'video', 5: 'video', 6: 'youtube', 7: 'youtube' },
+      0: { 4: 'youtube', 5: 'youtube', 6: 'flutter', 7: 'flutter' }
+    };
 
-const ORDERED_DAYS = [1,2,3,4,5,6,0];
-const DAY_LABELS   = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const DEFAULT_TIMES = ['6 AM', '8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM'];
 
-const COLOR_POOL = [
-  {cls:'sk-autocad',accent:'#1D9E75',textc:'#5DCAA5'},
-  {cls:'sk-flutter',accent:'#534AB7',textc:'#AFA9EC'},
-  {cls:'sk-design', accent:'#D85A30',textc:'#F0997B'},
-  {cls:'sk-video',  accent:'#BA7517',textc:'#EF9F27'},
-  {cls:'sk-youtube',accent:'#E24B4A',textc:'#F09595'},
-  {cls:'sk-extra0', accent:'#378ADD',textc:'#85B7EB'},
-  {cls:'sk-extra1', accent:'#639922',textc:'#97C459'},
-  {cls:'sk-extra2', accent:'#D4537E',textc:'#ED93B1'},
-];
+    const SKILL_COLOR_POOL = [
+      { accent: 'var(--sk-blue)', bg: 'var(--sk-blue-bg)' },
+      { accent: 'var(--sk-indigo)', bg: 'var(--sk-indigo-bg)' },
+      { accent: 'var(--sk-cyan)', bg: 'var(--sk-cyan-bg)' },
+      { accent: 'var(--sk-rose)', bg: 'var(--sk-rose-bg)' },
+      { accent: 'var(--sk-emerald)', bg: 'var(--sk-emerald-bg)' }
+    ];
 
-let activeFilter = null;
+    const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const DAY_MAP = [1, 2, 3, 4, 5, 6, 0]; // Mon=1, Sun=0
 
-// draft copies (used inside modal, committed on Save)
-let draftSchedule, draftSkills, draftTimes;
+    // ─── STATE ───
+    let skills, schedule, times, hourMap, journal;
+    let activeFilter = null;
+    let draftState = {};
+    let activeSessionToken = null; // day-slot
 
-// ─── SKILL BG helper ────────────────────────────────────────────────────
-function getSkillBg(id){
-  const map={
-    autocad:'var(--autocad-bg)',flutter:'var(--flutter-bg)',
-    design:'var(--design-bg)',video:'var(--video-bg)',youtube:'var(--youtube-bg)'
-  };
-  return map[id]||'rgba(255,255,255,.05)';
-}
-
-// ─── RENDER MAIN PAGE ────────────────────────────────────────────────────
-function buildLegend(){
-  const el=document.getElementById('legend');
-  el.innerHTML='';
-  Object.entries(SKILLS).forEach(([id,sk])=>{
-    const d=document.createElement('div');
-    d.className='legend-item'+(activeFilter===id?' active':(activeFilter?' dimmed':''));
-    d.style.background=getSkillBg(id);
-    d.style.color=sk.textc;
-    d.innerHTML=`<span class="legend-dot" style="background:${sk.accent}"></span>${sk.name}`;
-    d.onclick=()=>{activeFilter=activeFilter===id?null:id;buildAll();};
-    el.appendChild(d);
-  });
-  const all=document.createElement('div');
-  all.className='legend-item'+(!activeFilter?' active':'');
-  all.style.background='var(--surface2)';
-  all.style.color='var(--muted)';
-  all.innerHTML='All';
-  all.onclick=()=>{activeFilter=null;buildAll();};
-  el.appendChild(all);
-}
-
-function buildTable(){
-  const now=new Date(), todayIdx=now.getDay(), nowH=now.getHours();
-  const curSlot=HOUR_MAP.findIndex((h,i)=>nowH>=h&&(i===HOUR_MAP.length-1||nowH<HOUR_MAP[i+1]));
-  let html='<thead><tr><th class="time-head"></th>';
-  ORDERED_DAYS.forEach((di,i)=>{
-    const isToday=di===todayIdx;
-    html+=`<th${isToday?' class="today-col"':''}>${DAY_LABELS[i]}${isToday?' <span style="font-size:9px">●</span>':''}</th>`;
-  });
-  html+='</tr></thead><tbody>';
-  TIMES.forEach((t,si)=>{
-    const isCur=si===curSlot;
-    html+=`<tr${(si===3||si===6)?' class="section-sep"':''}><td class="time-label${(si===0||si===3||si===6)?' section-start':''}">${t}</td>`;
-    ORDERED_DAYS.forEach(di=>{
-      const isToday=di===todayIdx;
-      const skillId=(SCHEDULE[di]||{})[si];
-      const sk=skillId?SKILLS[skillId]:null;
-      let cls='slot'+(isToday?' today-col':'')+(isCur?' current-row':'')+(activeFilter&&skillId!==activeFilter?' dimmed':'');
-      if(sk){
-        html+=`<td class="${cls}"><div class="block ${sk.cls}${isToday&&isCur&&skillId?' active-session':''}" title="${sk.name} · ${t}"><span class="block-name">${sk.name}</span><span class="block-sub">${sk.sub}</span></div></td>`;
-      }else{
-        html+=`<td class="${cls}"><div class="empty-dot"></div></td>`;
+    async function init() {
+      try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        
+        skills = data.skills || DEFAULT_SKILLS;
+        schedule = data.schedule || DEFAULT_SCHEDULE;
+        times = data.times || DEFAULT_TIMES;
+        journal = data.journal || {};
+      } catch (err) {
+        console.error("API Fetch Error, using LocalStorage or defaults:", err);
+        skills = JSON.parse(localStorage.getItem('sp_skills')) || DEFAULT_SKILLS;
+        schedule = JSON.parse(localStorage.getItem('sp_schedule')) || DEFAULT_SCHEDULE;
+        times = JSON.parse(localStorage.getItem('sp_times')) || DEFAULT_TIMES;
+        journal = JSON.parse(localStorage.getItem('sp_journal')) || {};
       }
-    });
-    html+='</tr>';
-  });
-  html+='</tbody>';
-  document.getElementById('tt').innerHTML=html;
-}
+      
+      updateHourMap();
+      renderAll();
+      startClocks();
+    }
 
-function buildTodayBanner(){
-  const di=new Date().getDay();
-  const slots=Object.entries(SCHEDULE[di]||{});
-  const el=document.getElementById('today-sessions');
-  if(!slots.length){el.innerHTML='<span class="no-sessions">Rest day — no sessions scheduled</span>';return;}
-  el.innerHTML=slots.map(([si,id])=>{
-    const sk=SKILLS[id];if(!sk)return'';
-    return `<div class="today-pill" style="background:${getSkillBg(id)};color:${sk.textc}"><span class="today-dot" style="background:${sk.accent}"></span>${sk.name} · ${TIMES[si]}</div>`;
-  }).join('');
-}
+    function updateHourMap() {
+      hourMap = times.map(t => {
+        const m = t.match(/(\d+)\s*(AM|PM)/i);
+        if (!m) return 0;
+        let h = parseInt(m[1]);
+        if (m[2].toUpperCase() === 'PM' && h !== 12) h += 12;
+        if (m[2].toUpperCase() === 'AM' && h === 12) h = 0;
+        return h;
+      });
+    }
 
-function buildStats(){
-  const counts={};
-  Object.values(SKILLS).forEach(sk=>counts[sk.name]=0);
-  Object.values(SCHEDULE).forEach(day=>Object.values(day).forEach(id=>{if(SKILLS[id])counts[SKILLS[id].name]=(counts[SKILLS[id].name]||0)+1;}));
-  const total=Object.values(counts).reduce((a,b)=>a+b,0);
-  let html=Object.entries(SKILLS).map(([id,sk])=>`<div class="stat-card"><div class="stat-label" style="color:${sk.textc}">${sk.name}</div><div class="stat-value" style="color:${sk.accent}">${counts[sk.name]||0}</div><div class="stat-unit">hrs / week</div></div>`).join('');
-  html+=`<div class="stat-card"><div class="stat-label">Total</div><div class="stat-value">${total}</div><div class="stat-unit">hrs / week</div></div>`;
-  document.getElementById('stats').innerHTML=html;
-}
+    // ─── RENDERING ───
+    function renderAll() {
+      renderLegend();
+      renderTable();
+      renderStats();
+      updateProgress();
+      document.getElementById('app-subtitle').textContent = `Upskilling Journey · ${Object.keys(skills).length} Competencies`;
+    }
 
-function buildWeekProgress(){
-  const now=new Date(), d=now.getDay(), dfm=d===0?6:d-1;
-  const h=dfm*24+now.getHours()+now.getMinutes()/60;
-  const pct=Math.min(100,Math.round(h/(7*24)*100));
-  document.getElementById('wp-pct').textContent=pct+'%';
-  document.getElementById('wp-fill').style.width=pct+'%';
-}
+    function renderLegend() {
+      const container = document.getElementById('legend');
+      container.innerHTML = Object.entries(skills).map(([id, sk]) => `
+        <div class="legend-item ${activeFilter === id ? 'active' : (activeFilter ? 'dimmed' : '')}" 
+             style="background: ${sk.bg}; color: ${sk.accent}; border: 1px solid ${activeFilter === id ? sk.accent : 'transparent'}"
+             onclick="toggleFilter('${id}')">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: ${sk.accent}"></span>
+          ${sk.name}
+        </div>
+      `).join('') + `
+        <div class="legend-item ${!activeFilter ? 'active' : ''}" 
+             style="background: var(--surface); color: var(--text-muted); border: 1px solid ${!activeFilter ? 'var(--text-muted)' : 'transparent'}"
+             onclick="toggleFilter(null)">All</div>
+      `;
+    }
 
-function updateClock(){
-  const now=new Date(), pad=n=>String(n).padStart(2,'0');
-  const t=`${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-  document.getElementById('live-time').textContent=t;
-  const M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  document.getElementById('live-date').textContent=`${pad(now.getDate())} ${M[now.getMonth()]} ${now.getFullYear()}`;
-  document.getElementById('live-day').textContent=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][now.getDay()];
-  document.getElementById('last-refresh').textContent=t;
-}
+    function toggleFilter(id) {
+      activeFilter = (activeFilter === id) ? null : id;
+      renderLegend();
+      renderTable();
+    }
 
-function buildAll(){buildLegend();buildTable();buildTodayBanner();buildStats();buildWeekProgress();}
+    function renderTable() {
+      const now = new Date();
+      const today = now.getDay();
+      const curHour = now.getHours();
+      
+      // Calculate active slot
+      const activeSlotIdx = hourMap.findIndex((h, i) => curHour >= h && (i === hourMap.length - 1 || curHour < hourMap[i + 1]));
 
-// ─── MODAL ───────────────────────────────────────────────────────────────
-function openModal(){
-  draftSchedule=JSON.parse(JSON.stringify(SCHEDULE));
-  draftSkills=JSON.parse(JSON.stringify(SKILLS));
-  draftTimes=[...TIMES];
-  renderEditGrid();
-  renderSkillsList();
-  renderTimeslotsList();
-  document.getElementById('modal-backdrop').classList.add('open');
-}
+      let html = '<thead><tr><th class="time-cell"></th>';
+      DAY_MAP.forEach((di, i) => {
+        html += `<th class="${di === today ? 'today-col' : ''}">${DAYS[i]}</th>`;
+      });
+      html += '</tr></thead><tbody>';
 
-function closeModal(){document.getElementById('modal-backdrop').classList.remove('open');}
-function backdropClick(e){if(e.target.id==='modal-backdrop')closeModal();}
+      times.forEach((t, si) => {
+        html += `<tr><td class="time-cell">${t}</td>`;
+        DAY_MAP.forEach(di => {
+          const skillId = (schedule[di] || {})[si];
+          const sk = skills[skillId];
+          const isToday = di === today;
+          const isActiveSlot = si === activeSlotIdx;
+          const isHidden = activeFilter && skillId !== activeFilter;
 
-function switchTab(name,btn){
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  btn.classList.add('active');
-}
+          if (sk) {
+            html += `<td class="${isToday && isActiveSlot ? 'current-slot' : ''}" style="opacity: ${isHidden ? 0.15 : 1}">
+              <div class="skill-block ${isToday && isActiveSlot ? 'active-session-block' : ''}" 
+                   style="background: ${sk.bg}; color: ${sk.accent}"
+                   onclick="openSessionDetails(${di}, ${si})"
+                   title="${sk.name}: ${sk.sub}">
+                <span class="name">${sk.name}</span>
+                <span class="sub">${sk.sub}</span>
+              </div>
+            </td>`;
+          } else {
+            html += `<td class="${isToday && isActiveSlot ? 'current-slot' : ''}"><div class="empty-cell" onclick="openSessionDetails(${di}, ${si})"><div class="empty-dot"></div></div></td>`;
+          }
+        });
+        html += '</tr>';
+      });
 
-// ── SCHEDULE GRID ─────────────────────────────────────────────────────────
-function renderEditGrid(){
-  const opts=Object.entries(draftSkills).map(([id,sk])=>`<option value="${id}">${sk.name}</option>`).join('');
-  let html='<thead><tr><th style="text-align:right;padding-right:10px;min-width:56px;"></th>';
-  DAY_LABELS.forEach(d=>html+=`<th>${d}</th>`);
-  html+='</tr></thead><tbody>';
-  draftTimes.forEach((t,si)=>{
-    html+=`<tr><td class="eg-time">${t}</td>`;
-    ORDERED_DAYS.forEach(di=>{
-      const val=(draftSchedule[di]||{})[si]||'';
-      html+=`<td><select class="slot-select${val?' filled':''}" data-di="${di}" data-si="${si}"><option value="">—</option>${opts}</select></td>`;
-    });
-    html+='</tr>';
-  });
-  html+='</tbody>';
-  const grid=document.getElementById('edit-grid');
-  grid.innerHTML=html;
-  // set values & attach listeners
-  grid.querySelectorAll('select').forEach(sel=>{
-    const di=parseInt(sel.dataset.di), si=parseInt(sel.dataset.si);
-    const val=(draftSchedule[di]||{})[si]||'';
-    sel.value=val;
-    sel.addEventListener('change',function(){
-      if(!draftSchedule[di])draftSchedule[di]={};
-      if(this.value){draftSchedule[di][si]=this.value;this.classList.add('filled');}
-      else{delete draftSchedule[di][si];this.classList.remove('filled');}
-    });
-  });
-}
+      document.getElementById('schedule-table').innerHTML = html + '</tbody>';
+    }
 
-// ── SKILLS ───────────────────────────────────────────────────────────────
-function renderSkillsList(){
-  const el=document.getElementById('skills-list');
-  el.innerHTML='';
-  Object.entries(draftSkills).forEach(([id,sk],idx)=>{
-    const row=document.createElement('div');
-    row.className='skill-row';
-    row.innerHTML=`
-      <span class="skill-dot-preview" style="background:${sk.accent}"></span>
-      <input class="skill-input" value="${sk.name}" placeholder="Skill name" oninput="draftSkills['${id}'].name=this.value">
-      <input class="skill-input" value="${sk.sub}" placeholder="Subtitle e.g. App Dev" oninput="draftSkills['${id}'].sub=this.value">
-      <button class="btn-del" onclick="deleteSkill('${id}')">Remove</button>`;
-    el.appendChild(row);
-  });
-}
+    function renderStats() {
+      const counts = {};
+      Object.values(schedule).forEach(day => {
+        Object.values(day).forEach(id => {
+          if (skills[id]) counts[id] = (counts[id] || 0) + 2; // Assuming 2h per block
+        });
+      });
 
-function deleteSkill(id){
-  if(Object.keys(draftSkills).length<=1){showToast('Need at least 1 skill!','#E24B4A');return;}
-  delete draftSkills[id];
-  Object.keys(draftSchedule).forEach(di=>{
-    Object.keys(draftSchedule[di]).forEach(si=>{if(draftSchedule[di][si]===id)delete draftSchedule[di][si];});
-  });
-  renderSkillsList();
-  renderEditGrid();
-}
+      const container = document.getElementById('stats-container');
+      container.innerHTML = Object.entries(skills).map(([id, sk]) => `
+        <div class="stat-mini-card">
+          <div class="stat-mini-label" style="color: ${sk.accent}">${sk.name}</div>
+          <div class="stat-mini-val">${counts[id] || 0}<span style="font-size: 10px; color: var(--text-dim); margin-left: 4px;">Hrs</span></div>
+        </div>
+      `).join('');
+    }
 
-function addSkill(){
-  const id='skill_'+Date.now();
-  const colorIdx=Object.keys(draftSkills).length%COLOR_POOL.length;
-  const c=COLOR_POOL[colorIdx];
-  draftSkills[id]={name:'New Skill',sub:'Description',...c};
-  renderSkillsList();
-  renderEditGrid();
-}
+    function updateProgress() {
+      const totalHours = Object.values(schedule).reduce((acc, day) => acc + Object.keys(day).length * 2, 0);
+      
+      const now = new Date();
+      const currentDay = now.getDay();
+      const currentHour = now.getHours();
+      
+      let hoursDone = 0;
+      DAY_MAP.forEach(di => {
+        const daySchedule = schedule[di] || {};
+        Object.entries(daySchedule).forEach(([si, id]) => {
+          const slotHour = hourMap[si];
+          // If day is past OR (if day is today and hour is past/now)
+          const isPastDay = (DAY_MAP.indexOf(di) < DAY_MAP.indexOf(currentDay));
+          const isCurrentDayMatch = (di === currentDay);
+          if (isPastDay || (isCurrentDayMatch && slotHour < currentHour)) {
+             hoursDone += 2;
+          }
+        });
+      });
 
-// ── TIME SLOTS ────────────────────────────────────────────────────────────
-function renderTimeslotsList(){
-  const el=document.getElementById('timeslots-list');
-  el.innerHTML='';
-  draftTimes.forEach((t,i)=>{
-    const row=document.createElement('div');
-    row.className='timeslot-row';
-    row.innerHTML=`<input class="skill-input" value="${t}" placeholder="e.g. 9 AM" oninput="draftTimes[${i}]=this.value"><button class="btn-del" onclick="deleteTimeSlot(${i})">✕</button>`;
-    el.appendChild(row);
-  });
-}
+      const pct = totalHours ? Math.round((hoursDone / totalHours) * 100) : 0;
+      document.getElementById('progress-pct').textContent = pct + '%';
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('hours-done').textContent = hoursDone;
+      document.getElementById('hours-total').textContent = totalHours;
+    }
 
-function deleteTimeSlot(i){
-  if(draftTimes.length<=2){showToast('Need at least 2 time slots!','#E24B4A');return;}
-  draftTimes.splice(i,1);
-  Object.keys(draftSchedule).forEach(di=>{
-    const newDay={};
-    Object.entries(draftSchedule[di]).forEach(([si,sk])=>{
-      const idx=parseInt(si);
-      if(idx<i)newDay[idx]=sk;
-      else if(idx>i)newDay[idx-1]=sk;
-    });
-    draftSchedule[di]=newDay;
-  });
-  renderTimeslotsList();
-  renderEditGrid();
-}
+    // ─── CLOCK & COUNTDOWN ───
+    function startClocks() {
+      setInterval(updateUIClocks, 1000);
+      updateUIClocks();
+    }
 
-function addTimeSlot(){
-  draftTimes.push('New Time');
-  renderTimeslotsList();
-  renderEditGrid();
-}
+    function updateUIClocks() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      
+      document.getElementById('clock-time').textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      const options = { weekday: 'long', day: 'numeric', month: 'long' };
+      document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', options);
 
-// ── SAVE ──────────────────────────────────────────────────────────────────
-function saveChanges(){
-  SCHEDULE=JSON.parse(JSON.stringify(draftSchedule));
-  SKILLS=JSON.parse(JSON.stringify(draftSkills));
-  TIMES=[...draftTimes];
-  HOUR_MAP=TIMES.map(t=>{
-    const m=t.match(/(\d+)\s*(AM|PM)/i);
-    if(!m)return 0;
-    let h=parseInt(m[1]);
-    if(m[2].toUpperCase()==='PM'&&h!==12)h+=12;
-    if(m[2].toUpperCase()==='AM'&&h===12)h=0;
-    return h;
-  });
-  const btn=document.getElementById('btn-save');
-  btn.classList.add('saved');
-  btn.textContent='Saved!';
-  setTimeout(()=>{btn.classList.remove('saved');btn.textContent='Save changes';},700);
-  closeModal();
-  buildAll();
-  showToast('Timetable updated!','#1D9E75');
-}
+      updateCountdown(now);
+    }
 
-// ── TOAST ─────────────────────────────────────────────────────────────────
-function showToast(msg,color){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=color||'#1D9E75';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
+    function updateCountdown(now) {
+      const today = now.getDay();
+      const curHour = now.getHours();
+      const curMin = now.getMinutes();
+      const curSec = now.getSeconds();
 
-// ─── INIT ─────────────────────────────────────────────────────────────────
-buildAll();
-updateClock();
-setInterval(updateClock,1000);
-setInterval(()=>{buildTable();buildWeekProgress();},60000);
-</script>
+      // Find next session
+      let nextSession = null;
+      let minDiff = Infinity;
+
+      // Check remaining today
+      const todaySched = schedule[today] || {};
+      Object.entries(todaySched).forEach(([si, id]) => {
+        const h = hourMap[si];
+        if (h > curHour) {
+          const diff = (h - curHour) * 3600 - curMin * 60 - curSec;
+          if (diff < minDiff) {
+            minDiff = diff;
+            nextSession = { id, diff };
+          }
+        }
+      });
+
+      // If nothing today, check next days
+      if (!nextSession) {
+        for (let i = 1; i <= 7; i++) {
+          const nextDay = (today + i) % 7;
+          const daySched = schedule[nextDay] || {};
+          const firstSlotSi = Object.keys(daySched).sort((a,b) => hourMap[a] - hourMap[b])[0];
+          if (firstSlotSi !== undefined) {
+             const h = hourMap[firstSlotSi];
+             const diff = (i * 24 * 3600) + ((h - curHour) * 3600) - curMin * 60 - curSec;
+             nextSession = { id: daySched[firstSlotSi], diff };
+             break;
+          }
+        }
+      }
+
+      const countdownEl = document.getElementById('countdown-val');
+      const nameEl = document.getElementById('next-session-name');
+
+      if (nextSession) {
+        const h = Math.floor(nextSession.diff / 3600);
+        const m = Math.floor((nextSession.diff % 3600) / 60);
+        const s = nextSession.diff % 60;
+        countdownEl.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+        nameEl.textContent = skills[nextSession.id].name;
+      } else {
+        countdownEl.textContent = "00:00:00";
+        nameEl.textContent = "No Upcoming Sessions";
+      }
+    }
+
+    // ─── MODAL LOGIC ───
+    function openModal() {
+      draftState = {
+        skills: JSON.parse(JSON.stringify(skills)),
+        schedule: JSON.parse(JSON.stringify(schedule)),
+        times: [...times]
+      };
+      renderEditGrid();
+      renderEditSkills();
+      renderEditTimes();
+      document.getElementById('modal-overlay').classList.add('open');
+      switchTab('schedule');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+
+    function handleBackdrop(e) {
+      if (e.target.id === 'modal-overlay') closeModal();
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + tab).style.display = 'block';
+      document.getElementById('tab-btn-' + tab).classList.add('active');
+    }
+
+    function renderEditGrid() {
+      const opts = Object.entries(draftState.skills).map(([id, sk]) => `<option value="${id}">${sk.name}</option>`).join('');
+      let html = '<thead><tr><th></th>';
+      DAYS.forEach(d => html += `<th>${d}</th>`);
+      html += '</tr></thead><tbody>';
+
+      draftState.times.forEach((t, si) => {
+        html += `<tr><td style="font-size: 10px; color: var(--text-dim); text-align: right; padding-right: 8px;">${t}</td>`;
+        DAY_MAP.forEach(di => {
+          const val = (draftState.schedule[di] || {})[si] || '';
+          html += `<td><select class="slot-select" data-di="${di}" data-si="${si}">
+            <option value="">—</option>
+            ${opts}
+          </select></td>`;
+        });
+        html += '</tr>';
+      });
+
+      const container = document.getElementById('edit-grid');
+      container.innerHTML = html + '</tbody>';
+
+      container.querySelectorAll('select').forEach(sel => {
+        const {di, si} = sel.dataset;
+        sel.value = (draftState.schedule[di] || {})[si] || '';
+        sel.onchange = (e) => {
+          if (!draftState.schedule[di]) draftState.schedule[di] = {};
+          if (e.target.value) draftState.schedule[di][si] = e.target.value;
+          else delete draftState.schedule[di][si];
+        };
+      });
+    }
+
+    function renderEditSkills() {
+      const container = document.getElementById('edit-skills-list');
+      container.innerHTML = Object.entries(draftState.skills).map(([id, sk]) => `
+        <div class="skill-edit-row">
+          <div style="width: 12px; height: 12px; border-radius: 50%; background: ${sk.accent}"></div>
+          <input class="input-field" value="${sk.name}" oninput="draftState.skills['${id}'].name=this.value">
+          <input class="input-field" value="${sk.sub}" oninput="draftState.skills['${id}'].sub=this.value">
+          <button class="glass-btn" onclick="deleteSkill('${id}')" style="color: var(--sk-rose); padding: 4px 10px;">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function addSkill() {
+      const id = 'sk_' + Date.now();
+      const color = SKILL_COLOR_POOL[Object.keys(draftState.skills).length % SKILL_COLOR_POOL.length];
+      draftState.skills[id] = { name: 'New Skill', sub: 'Competency', ...color };
+      renderEditSkills();
+      renderEditGrid();
+    }
+
+    function deleteSkill(id) {
+      delete draftState.skills[id];
+      Object.keys(draftState.schedule).forEach(di => {
+        Object.keys(draftState.schedule[di]).forEach(si => {
+          if (draftState.schedule[di][si] === id) delete draftState.schedule[di][si];
+        });
+      });
+      renderEditSkills();
+      renderEditGrid();
+    }
+
+    function renderEditTimes() {
+      const container = document.getElementById('edit-timeslots-list');
+      container.innerHTML = draftState.times.map((t, i) => `
+        <div class="skill-edit-row" style="grid-template-columns: 1fr auto;">
+          <input class="input-field" value="${t}" oninput="draftState.times[${i}]=this.value">
+          <button class="glass-btn" onclick="deleteTimeSlot(${i})" style="color: var(--sk-rose); padding: 4px 10px;">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function addTimeSlot() {
+      draftState.times.push('12 PM');
+      renderEditTimes();
+      renderEditGrid();
+    }
+
+    function deleteTimeSlot(i) {
+      draftState.times.splice(i, 1);
+      // Shift schedule indices
+      Object.keys(draftState.schedule).forEach(di => {
+        const newDay = {};
+        Object.entries(draftState.schedule[di]).forEach(([si, id]) => {
+          const idx = parseInt(si);
+          if (idx < i) newDay[idx] = id;
+          else if (idx > i) newDay[idx - 1] = id;
+        });
+        draftState.schedule[di] = newDay;
+      });
+      renderEditTimes();
+      renderEditGrid();
+    }
+
+    async function saveAll() {
+      skills = draftState.skills;
+      schedule = draftState.schedule;
+      times = draftState.times;
+      
+      // Save locally as backup
+      localStorage.setItem('sp_skills', JSON.stringify(skills));
+      localStorage.setItem('sp_schedule', JSON.stringify(schedule));
+      localStorage.setItem('sp_times', JSON.stringify(times));
+      
+      // Save to Server
+      try {
+        const res = await fetch('/api/data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ skills, schedule, times })
+        });
+        
+        if (res.ok) {
+            showToast('Changes synced to server');
+        } else {
+            showToast('Failed to sync with server, saved locally');
+        }
+      } catch (err) {
+        showToast('Server offline, changes saved locally');
+      }
+      
+      updateHourMap();
+      renderAll();
+      closeModal();
+    }
+
+    // ─── UTILS ───
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function exportData() {
+      const data = { skills, schedule, times };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `skillpulse_backup_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      showToast('Data exported as JSON');
+    }
+
+    // ─── SESSION LOGIC ───
+    function openSessionDetails(day, slot) {
+        const skillId = (schedule[day] || {})[slot];
+        const sk = skills[skillId];
+        activeSessionToken = `${day}-${slot}`;
+        
+        const overlay = document.getElementById('session-modal');
+        const header = document.getElementById('session-modal-header');
+        const title = document.getElementById('session-title');
+        const subtitle = document.getElementById('session-subtitle');
+        const desc = document.getElementById('session-desc');
+        const journalBox = document.getElementById('session-journal');
+        
+        if (sk) {
+            title.textContent = sk.name;
+            subtitle.textContent = `${DAYS[DAY_MAP.indexOf(day)]} • ${times[slot]}`;
+            desc.textContent = sk.sub;
+            header.style.borderLeft = `6px solid ${sk.accent}`;
+        } else {
+            title.textContent = "Empty Slot";
+            subtitle.textContent = `${DAYS[DAY_MAP.indexOf(day)]} • ${times[slot]}`;
+            desc.textContent = "No session scheduled for this time.";
+            header.style.borderLeft = `6px solid var(--text-dim)`;
+        }
+        
+        journalBox.value = journal[activeSessionToken] || "";
+        overlay.classList.add('open');
+    }
+
+    function closeSessionModal(e) {
+        if (e && e.target !== document.getElementById('session-modal')) return;
+        document.getElementById('session-modal').classList.remove('open');
+    }
+
+    async function saveSessionJournal() {
+        const entry = document.getElementById('session-journal').value;
+        journal[activeSessionToken] = entry;
+        
+        // Save to browser
+        localStorage.setItem('sp_journal', JSON.stringify(journal));
+        
+        // Save to server
+        try {
+            const data = { skills, schedule, times, journal };
+            const res = await fetch('/api/data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (res.ok) {
+                showToast('Journal synced to server');
+            }
+        } catch (err) {
+            showToast('Local journal saved');
+        }
+        
+        closeSessionModal();
+    }
+
+    // ─── START ───
+    init();
+  </script>
 </body>
 </html>
