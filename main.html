@@ -169,25 +169,25 @@
       gap: 24px;
     }
 
-    /* ══════ CARDS (Premium Glassmorphism) ══════ */
+    /* ══════ ULTIMATE CARDS (3D Parallax & Glare) ══════ */
     .glass-card {
       background: var(--surface);
       backdrop-filter: var(--surface-blur);
       -webkit-backdrop-filter: var(--surface-blur);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 24px;
       position: relative;
       overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      transition: box-shadow 0.4s ease, border-color 0.4s ease;
       transform-style: preserve-3d;
+      perspective: 1000px;
     }
 
-    /* Glare Layer */
     .glass-card .glare {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--mouseX) var(--mouseY), rgba(255,255,255,0.08) 0%, transparent 60%);
+      background: radial-gradient(circle at var(--mouseX) var(--mouseY), rgba(255,255,255,0.1) 0%, transparent 70%);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -197,9 +197,56 @@
     .glass-card:hover .glare { opacity: 1; }
 
     .glass-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 12px 30px -10px rgba(0,0,0,0.5), 0 0 0 1px var(--border-accent);
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.6), 0 0 0 1px var(--border-accent);
+      border-color: rgba(255, 255, 255, 0.2);
     }
+
+    /* Floating Particles Background */
+    .particles-container {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 50%;
+        opacity: 0.15;
+        filter: blur(2px);
+        animation: float-particle var(--duration) linear infinite;
+    }
+
+    @keyframes float-particle {
+        from { transform: translateY(110vh) translateX(var(--startX)); opacity: 0; }
+        50% { opacity: 0.3; }
+        to { transform: translateY(-10vh) translateX(var(--endX)); opacity: 0; }
+    }
+
+    /* Animated Border for Active Card */
+    .active-glow::after {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: 24px;
+        padding: 2px;
+        background: linear-gradient(90deg, var(--accent), #a78bfa, var(--accent));
+        background-size: 200% auto;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: border-rotate 4s linear infinite;
+        opacity: 0.5;
+    }
+
+    @keyframes border-rotate {
+        to { background-position: 200% center; }
+    }
+
 
 
     .card-title {
@@ -307,17 +354,23 @@
       transition: background 0.3s ease;
     }
 
-    /* Staggered Entry Animation */
-    .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Staggered Entry Animation (CSS Only for stability) */
+    @keyframes reveal-in {
+        from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+        to { opacity: 1; transform: translateY(0); filter: blur(0); }
     }
 
-    .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
+    .reveal {
+        opacity: 0;
+        animation: reveal-in 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+
+    .reveal:nth-child(1) { animation-delay: 0.1s; }
+    .reveal:nth-child(2) { animation-delay: 0.2s; }
+    .reveal:nth-child(3) { animation-delay: 0.3s; }
+    .reveal:nth-child(4) { animation-delay: 0.4s; }
+    .reveal:nth-child(5) { animation-delay: 0.5s; }
+
 
 
     .time-cell {
@@ -573,6 +626,7 @@
   </style>
 </head>
 <body>
+  <div class="particles-container" id="particles"></div>
   <div class="app-container">
     <header>
       <div class="brand">
@@ -603,7 +657,7 @@
       </div>
 
       <div class="side-panel">
-        <div class="glass-card reveal">
+        <div class="glass-card reveal active-glow">
           <div class="glare"></div>
           <div class="card-title">Next Session</div>
           <div class="countdown-timer">
@@ -765,34 +819,54 @@
       renderAll();
       startClocks();
       initVisualEffects();
+      initParticles();
     }
 
     // ─── VISUAL EFFECTS ───
     function initVisualEffects() {
-        // Interactive Glare
+        // Ultimate 3D Parallax & Glare
         document.addEventListener('mousemove', e => {
             const cards = document.querySelectorAll('.glass-card');
             cards.forEach(card => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
+                
+                // Calculate Mouse Position for Glare (0-100%)
                 card.style.setProperty('--mouseX', `${x}px`);
                 card.style.setProperty('--mouseY', `${y}px`);
+
+                // Calculate Rotation (-5 to 5 degrees)
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
         });
-
-        // Staggered Entrance Reveal
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, i * 150);
-                }
+        
+        // Reset rotation when mouse leaves
+        document.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.glass-card').forEach(card => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
             });
-        }, { threshold: 0.1 });
+        });
+    }
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    function initParticles() {
+        const container = document.getElementById('particles');
+        const count = 30;
+        for (let i = 0; i < count; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.setProperty('--startX', `${Math.random() * 100}vw`);
+            p.style.setProperty('--endX', `${(Math.random() - 0.5) * 20}vw`);
+            p.style.setProperty('--duration', `${15 + Math.random() * 25}s`);
+            p.style.left = `${Math.random() * 100}vw`;
+            p.style.animationDelay = `${Math.random() * 20}s`;
+            container.appendChild(p);
+        }
     }
 
     function updateHourMap() {

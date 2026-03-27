@@ -1,20 +1,102 @@
 {
   "skills": {
-    "autocad": { "name": "AutoCAD", "sub": "2D/3D Drafting", "accent": "var(--sk-emerald)", "bg": "var(--sk-emerald-bg)" },
-    "flutter": { "name": "Flutter", "sub": "App Development", "accent": "var(--sk-purple)", "bg": "var(--sk-purple-bg)" },
-    "design": { "name": "Graphic Design", "sub": "UI/UX Design", "accent": "var(--sk-orange)", "bg": "var(--sk-orange-bg)" },
-    "video": { "name": "Video Editing", "sub": "Post-Production", "accent": "var(--sk-amber)", "bg": "var(--sk-amber-bg)" },
-    "youtube": { "name": "YouTube", "sub": "Content Creation", "accent": "var(--sk-rose)", "bg": "var(--sk-rose-bg)" }
+    "autocad": {
+      "name": "AutoCAD",
+      "sub": "2D/3D Drafting",
+      "accent": "var(--sk-emerald)",
+      "bg": "var(--sk-emerald-bg)"
+    },
+    "flutter": {
+      "name": "Flutter",
+      "sub": "App Development",
+      "accent": "var(--sk-purple)",
+      "bg": "var(--sk-purple-bg)"
+    },
+    "design": {
+      "name": "Graphic Design",
+      "sub": "UI/UX Design",
+      "accent": "var(--sk-orange)",
+      "bg": "var(--sk-orange-bg)"
+    },
+    "video": {
+      "name": "Video Editing",
+      "sub": "Post-Production",
+      "accent": "var(--sk-amber)",
+      "bg": "var(--sk-amber-bg)"
+    },
+    "youtube": {
+      "name": "YouTube",
+      "sub": "Content Creation",
+      "accent": "var(--sk-rose)",
+      "bg": "var(--sk-rose-bg)"
+    }
   },
   "schedule": {
-    "1": { "1": "flutter", "2": "flutter", "4": "autocad", "5": "autocad", "7": "design" },
-    "2": { "1": "autocad", "2": "autocad", "4": "flutter", "5": "flutter", "6": "video", "7": "video" },
-    "3": { "1": "design", "2": "design", "4": "video", "5": "video", "7": "youtube" },
-    "4": { "1": "flutter", "2": "flutter", "4": "autocad", "5": "autocad", "6": "design", "7": "design" },
-    "5": { "1": "video", "2": "video", "4": "flutter", "5": "flutter", "7": "youtube" },
-    "6": { "0": "autocad", "1": "autocad", "2": "design", "3": "design", "4": "video", "5": "video", "6": "youtube", "7": "youtube" },
-    "0": { "4": "youtube", "5": "youtube", "6": "flutter", "7": "flutter" }
+    "0": {
+      "4": "youtube",
+      "5": "youtube",
+      "6": "flutter",
+      "7": "flutter"
+    },
+    "1": {
+      "1": "flutter",
+      "2": "flutter",
+      "4": "autocad",
+      "5": "autocad",
+      "7": "design"
+    },
+    "2": {
+      "1": "autocad",
+      "2": "autocad",
+      "4": "flutter",
+      "5": "flutter",
+      "6": "video",
+      "7": "video"
+    },
+    "3": {
+      "1": "design",
+      "2": "design",
+      "4": "video",
+      "5": "video",
+      "7": "youtube"
+    },
+    "4": {
+      "1": "flutter",
+      "2": "flutter",
+      "4": "autocad",
+      "5": "autocad",
+      "6": "design",
+      "7": "design"
+    },
+    "5": {
+      "1": "video",
+      "2": "video",
+      "4": "flutter",
+      "5": "flutter",
+      "7": "youtube"
+    },
+    "6": {
+      "0": "autocad",
+      "1": "autocad",
+      "2": "design",
+      "3": "design",
+      "4": "video",
+      "5": "video",
+      "6": "youtube",
+      "7": "youtube"
+    }
   },
-  "times": ["6 AM", "8 AM", "10 AM", "12 PM", "2 PM", "4 PM", "6 PM", "8 PM"],
-  "journal": {}
+  "times": [
+    "6 AM",
+    "8 AM",
+    "10 AM",
+    "12 PM",
+    "2 PM",
+    "4 PM",
+    "6 PM",
+    "8 PM"
+  ],
+  "journal": {
+    "1-1": ""
+  }
 }
